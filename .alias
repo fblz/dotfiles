@@ -1,0 +1,2 @@
+alias ll='ls -FAhl'
+alias la='ls -FAh'
