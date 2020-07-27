@@ -6,7 +6,15 @@ HISTSIZE=1000
 HISTFILESIZE=2000
 shopt -s histappend
 shopt -s checkwinsize
-PS1='\u@\h:\w\$ '
+
+case "$TERM" in
+*color)
+    PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    ;;
+*)
+    PS1='\u@\h:\w\$ '
+    ;;
+esac
 
 test -s ~/.alias && . ~/.alias || true
 
