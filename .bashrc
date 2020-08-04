@@ -34,8 +34,12 @@ export EDITOR=/usr/bin/vim
 
 test -x $(which tmux) || return
 
-tmux has-session -t ssh || tmux new-session -s ssh -d
+if [ -z "$TMUXSESSION" ]; then
+    export TMUXSESSION='ssh'
+fi
 
-tmux has-session -t ssh || return
+tmux has-session -t $TMUXSESSION || tmux new-session -s $TMUXSESSION -d
 
-exec tmux attach-session -t ssh
+tmux has-session -t $TMUXSESSION || return
+
+exec tmux attach-session -t $TMUXSESSION
