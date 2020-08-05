@@ -24,11 +24,15 @@ fi
 
 export EDITOR=/usr/bin/vim
 
+if [ -n "$TMUX" ]; then
+  function update-agent {
+    export $(tmux show-environment | grep "^SSH_AUTH_SOCK=") > /dev/null
+  }
+  return
+fi
+
 # don't start tmux when invoked via sudo
 [ -n "$SUDO_USER" ] && return
-
-# don't start tmux if already running inside tmux
-[ -n "$TMUX" ] && return
 
 [ -n "$SKIPTMUX" ] && return
 
