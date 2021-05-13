@@ -1,0 +1,70 @@
+general {
+    output_format = "i3bar"
+    colors = false
+    markup = pango
+    interval = 2
+}
+
+order += "load"
+order += "cpu_usage 0"
+order += "memory"
+order += "disk /"
+order += "ethernet enp0s3"
+#order += "ethernet wlp59s0"
+#order += "battery 0"
+order += "volume master"
+order += "tztime local"
+
+
+load {
+    format = "<span background='#3971ed' color='#000000'>  %1min </span>"
+}
+
+cpu_usage {
+    format = "<span background='#3971ed' color='#000000'>  %usage </span>"
+}
+
+memory {
+    format = "<span background='#3971ed' color='#000000'>  %available free </span>"
+}
+
+disk "/" {
+    format = "<span background='#3971ed' color='#000000'>  %avail free </span>"
+    prefix_type    = custom
+}
+
+ethernet enp0s3 {
+    format_up = "<span background='#3971ed' color='#000000'>  %ip </span>"
+    format_down = "<span background='#3971ed' color='#000000'>  - </span>"
+}
+
+ethernet wlp59s0 {
+    format_up = "<span background='#3971ed' color='#000000'>  %ip </span>"
+    format_down = "<span background='#3971ed' color='#000000'>  - </span>"
+}
+
+battery 0 {
+    format = "<span background='#3971ed' color='#000000'> %status %percentage </span>"
+    last_full_capacity = true
+    format_down = "<span background='#3971ed' color='#000000'> No Battery </span>"
+    status_chr = "⚡ Charging"
+    status_bat = " Battery"
+    status_unk = " Unknown"
+    status_full = " Charged"
+    path = "/sys/class/power_supply/BAT%d/uevent"
+    low_threshold = 10
+}    
+
+volume master {
+    format = "<span background='#3971ed' color='#000000'>  %volume </span>"
+    format_muted = "<span background='#3971ed' color='#000000'>  %volume </span>"
+    device = "default"
+    mixer = "Master"
+    mixer_idx = 0
+}
+
+tztime local {
+    format = "<span background='#3971ed' color='#000000'>  %time</span>"
+    format_time = "%A, %e.%B %H:%M:%S"
+
+}
