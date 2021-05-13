@@ -15,19 +15,15 @@ for profile in "$@"; do
         ln -fs $sources/.tmux.conf ~/.tmux.conf
         ln -fs $sources/.vimrc ~/.vimrc
 
-        # This might grow regularly, so we keep this a loop
         mkdir -p ~/.bashrc.d/
-        for file in $sources/.bashrc.d/*; do
-            if [ -f "$file" ]; then
-                bname=$(basename $file)
-                ln -fs $file ~/.bashrc.d/$bname
-                unset bname
-            fi
-        done
-        unset file
+        ln -fs $sources/.bashrc.d/20-defaults.sh ~/.bashrc.d/20-defaults.sh
+        ln -fs $sources/.bashrc.d/30-alias.sh ~/.bashrc.d/30-alias.sh
+        ln -fs $sources/.bashrc.d/40-extensions.sh ~/.bashrc.d/40-extensions.sh
+        ln -fs $sources/.bashrc.d/99-tmux.sh ~/.bashrc.d/99-tmux.sh
         ;;
     desktop)
         ln -fs $sources/.lock ~/.lock
+        
         mkdir -p ~/.config/i3/
         mkdir -p ~/.config/i3status/
         mkdir -p ~/.config/rofi/
