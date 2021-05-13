@@ -27,6 +27,7 @@ for profile in "$@"; do
         unset file
         ;;
     desktop)
+        ln -fs $sources/.lock ~/.lock
         mkdir -p ~/.config/i3/
         mkdir -p ~/.config/i3status/
         mkdir -p ~/.config/rofi/
