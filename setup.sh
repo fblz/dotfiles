@@ -2,13 +2,16 @@
 
 if [ -z "$1" ] || [ $1 == "-h" ] || [ $1 == "--help" ]; then
     echo "$0 <profiles...>"
-    echo "-h --help :  show this"
+    echo "Currently available Profiles:"
+    echo "console"
+    echo "desktop"
     exit
 fi
 
 sources=$(dirname $(readlink -f $0))
 
 for profile in "$@"; do
+    echo "Installing profile '$profile'"
     case "$profile" in
     console)
         ln -fs $sources/.bashrc ~/.bashrc
@@ -32,10 +35,11 @@ for profile in "$@"; do
         ln -fs $sources/.config/rofi/config.rasi ~/.config/rofi/config.rasi
         ;;
     *)
-        echo "Unknown profile \"$profile\""
+        echo "unknown profile"
+        continue
         ;;
     esac
+    echo "success"
 done
 unset profile
 unset sources
-echo "All done???"
