@@ -6,7 +6,10 @@ HISTSIZE=1000
 HISTFILESIZE=2000
 shopt -s histappend
 shopt -s checkwinsize
-
+shopt -s histverify
+shopt -s no_empty_cmd_completion
+shopt -s nocaseglob
+ 
 export EDITOR=/usr/bin/vim
 
 case "$TERM" in
