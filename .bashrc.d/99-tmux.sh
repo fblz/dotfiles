@@ -1,6 +1,6 @@
 # leave as 99-*, this will exec into tmux and you want all other stuff to be executed before
 [ -z "$SSH_TTY" ] && return
-test -x $(which tmux) || return
+which tmux >/dev/null 2>&1 || return
 
 if [ -n "$TMUX" ]; then
   function update-agent {
