@@ -1,7 +1,8 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-HISTCONTROL=ignoredups:ignorespace
+HISTCONTROL=ignoredups
+HISTIGNORE='ls*':'la*':'ll*':'exit':'clear':'du*':'ip a':'cd':'cd ~':'cd ..':'man *':'which *':'history -c'
 HISTSIZE=1000
 HISTFILESIZE=2000
 shopt -s histappend
