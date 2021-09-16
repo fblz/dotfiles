@@ -29,17 +29,18 @@ for profile in "$@"; do
         ubuntu)
             apt-get update
             apt-get install -y tmux git vim fzf bash-completion
-            ;;
+        ;;
         fedora)
             dnf install --assumeyes tmux git vim fzf bash-completion
-            ;;
+        ;;
         opensuse-leap)
             zypper install --no-confirm tmux git vim fzf bash-completion
-            ;;
+        ;;
         *)
             echo "not configured"
-            ;;
         ;;
+        esac
+    ;;
     desktop)
         case "$ID" in
         fedora)
@@ -47,15 +48,16 @@ for profile in "$@"; do
             rpm --import https://packages.microsoft.com/keys/microsoft.asc
             echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo
             dnf install --assumeyes xfce4-terminal xss-lock rofi maim ImageMagick keepassxc nextcloud-client fontawesome-fonts code feh remmina
-            ;;
+        ;;
         *)
             echo "not configured"
-            ;;
         ;;
+        esac
+    ;;
     *)
         echo "unknown profile"
         continue
-        ;;
+    ;;
     esac
     echo "success"
 done
