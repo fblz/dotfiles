@@ -1,4 +1,4 @@
-# leave as 99-*, this will exec into tmux and you want all other stuff to be executed before
+# leave as 05-*, this will exec into tmux so we don't need other bash config
 [ -z "$SSH_TTY" ] && return
 command -v "tmux" >/dev/null || return
 
