@@ -10,6 +10,7 @@ shopt -s checkwinsize
 shopt -s histverify
 shopt -s no_empty_cmd_completion
 shopt -s nocaseglob
+shopt -s cdspell
  
 export EDITOR=/usr/bin/vim
 

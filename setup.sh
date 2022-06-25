@@ -17,6 +17,7 @@ for profile in "$@"; do
         ln -fs $sources/.bashrc ~/.bashrc
         ln -fs $sources/.tmux.conf ~/.tmux.conf
         ln -fs $sources/.vimrc ~/.vimrc
+        ln -fs $sources/.inputrc ~/.inputrc
 
         mkdir -p ~/.bashrc.d/
         ln -fs $sources/.bashrc.d/05-tmux.sh ~/.bashrc.d/05-tmux.sh
