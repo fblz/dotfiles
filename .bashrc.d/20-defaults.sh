@@ -2,7 +2,7 @@
 [ -z "$PS1" ] && return
 
 HISTCONTROL=ignoredups
-HISTIGNORE='exit':'clear':'du*':'ip a':'cd':'cd ~':'cd ..':'man *':'which *':'history -c'
+HISTIGNORE='exit':'clear':'du*':'ip a':'cd':'cd ~':'cd ..':'man *':'which *':'history -c':' *'
 HISTSIZE=1000
 HISTFILESIZE=2000
 shopt -s histappend
