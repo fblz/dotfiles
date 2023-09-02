@@ -2,7 +2,7 @@
 [ -z "$PS1" ] && return
 
 HISTCONTROL=ignoredups
-HISTIGNORE='ls*':'la*':'ll*':'exit':'clear':'du*':'ip a':'cd':'cd ~':'cd ..':'man *':'which *':'history -c'
+HISTIGNORE='exit':'clear':'du*':'ip a':'cd':'cd ~':'cd ..':'man *':'which *':'history -c':' *'
 HISTSIZE=1000
 HISTFILESIZE=2000
 shopt -s histappend
@@ -10,6 +10,7 @@ shopt -s checkwinsize
 shopt -s histverify
 shopt -s no_empty_cmd_completion
 shopt -s nocaseglob
+shopt -s cdspell
  
 export EDITOR=/usr/bin/vim
 

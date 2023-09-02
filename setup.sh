@@ -17,13 +17,14 @@ for profile in "$@"; do
         ln -fs $sources/.bashrc ~/.bashrc
         ln -fs $sources/.tmux.conf ~/.tmux.conf
         ln -fs $sources/.vimrc ~/.vimrc
+        ln -fs $sources/.inputrc ~/.inputrc
 
         mkdir -p ~/.bashrc.d/
+        ln -fs $sources/.bashrc.d/05-tmux.sh ~/.bashrc.d/05-tmux.sh
         ln -fs $sources/.bashrc.d/20-defaults.sh ~/.bashrc.d/20-defaults.sh
         ln -fs $sources/.bashrc.d/30-alias.sh ~/.bashrc.d/30-alias.sh
         ln -fs $sources/.bashrc.d/40-extensions.sh ~/.bashrc.d/40-extensions.sh
         ln -fs $sources/.bashrc.d/98-fzf.sh ~/.bashrc.d/98-fzf.sh
-        ln -fs $sources/.bashrc.d/99-tmux.sh ~/.bashrc.d/99-tmux.sh
         ;;
     desktop)
         ln -fs $sources/.lock ~/.lock
