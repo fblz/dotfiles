@@ -1,0 +1,1 @@
+journal-lastrun() { journalctl -u $1 _SYSTEMD_INVOCATION_ID="$(systemctl show -p InvocationID --value $1)"; }
