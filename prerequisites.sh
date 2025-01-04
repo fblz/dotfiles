@@ -28,13 +28,13 @@ for profile in "$@"; do
         case "$ID" in
         ubuntu)
             apt-get update
-            apt-get install -y tmux git vim fzf bash-completion
+            apt-get install -y tmux git vim fzf bash-completion tree
         ;;
         fedora)
-            dnf install --assumeyes tmux git vim fzf bash-completion
+            dnf install --assumeyes tmux git vim fzf bash-completion tree
         ;;
         opensuse-leap)
-            zypper install --no-confirm tmux git vim fzf bash-completion
+            zypper install --no-confirm tmux git vim fzf bash-completion tree
         ;;
         *)
             echo "not configured"
