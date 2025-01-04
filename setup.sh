@@ -5,6 +5,7 @@ if [ -z "$1" ] || [ $1 == "-h" ] || [ $1 == "--help" ]; then
     echo "Currently available Profiles:"
     echo "console"
     echo "desktop"
+    echo "ssh"
     exit
 fi
 
@@ -37,6 +38,15 @@ for profile in "$@"; do
         ln -fs $sources/.config/i3status/config ~/.config/i3status/config
         ln -fs $sources/.config/rofi/config.rasi ~/.config/rofi/config.rasi
         ln -fs $sources/.config/xfce4/terminal/terminalrc ~/.config/xfce4/terminal/terminalrc
+        ;;
+    ssh)
+				echo "Warning: This overwrites the files in /etc/ssh." 
+				echo "sudo is used." 
+        sudo mkdir -p /etc/ssh/sshd_config.d/
+        sudo cp -f $sources/etc/ssh/sshd_config /etc/ssh/sshd_config
+        sudo cp -f $sources/etc/ssh/sshd_config.d/10-security.conf /etc/ssh/sshd_config.d/10-security.conf
+        sudo cp -f $sources/etc/ssh/sshd_config.d/30-autotmux.conf /etc/ssh/sshd_config.d/30-autotmux.conf
+        sudo cp -f $sources/etc/ssh/sshd_config.d/90-defaults.conf /etc/ssh/sshd_config.d/90-defaults.conf
         ;;
     *)
         echo "unknown profile"
