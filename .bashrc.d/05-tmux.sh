@@ -9,17 +9,12 @@ if [ -n "$TMUX" ]; then
   return
 fi
 
-# don't start tmux when invoked via sudo
-[ -n "$SUDO_USER" ] && return
-
 [ -n "$SKIPTMUX" ] && return
 
-if [ -z "$TMUXSESSION" ]; then
-    export TMUXSESSION='ssh'
+if sudo -nv 2>/dev/null; then
+  # If we have sudo, we sudo into tmux.
+	exec sudo tmux new-session -A -s ${TMUXSESSION:=ssh} -c '~'
 fi
 
-tmux has-session -t $TMUXSESSION || tmux new-session -s $TMUXSESSION -d
-
-tmux has-session -t $TMUXSESSION || return
-
-exec tmux attach-session -t $TMUXSESSION
+# Else we run as the user
+exec tmux new-session -A -s ${TMUXSESSION:=ssh} -c '~'
