@@ -20,9 +20,9 @@ fi
 # This is to skip the auto tmux. Use with /etc/ssh/sshd_config.d/30-autotmux.conf
 [ -n "$SKIPTMUX" ] && return
 
-if sudo -nv 2>/dev/null; then
+if [ "$(id -u)" -ne 0 ] && sudo -nv 2>/dev/null; then
   # If we have sudo, we sudo into tmux.
-	exec sudo --preserve-env=SSH_AUTH_SOCK tmux new-session -A -s ${TMUXSESSION:=ssh} -c '~'
+  exec sudo --preserve-env=SSH_AUTH_SOCK tmux new-session -A -s ${TMUXSESSION:=ssh} -c '~'
 fi
 
 # Else we run as the user
