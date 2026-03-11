@@ -1,0 +1,80 @@
+#!/bin/bash
+
+# Function to display usage information
+usage() {
+    echo "This is a wrapper for SSH. Use -H <search_string> to search the ssh-agent for a public key."
+    echo "The public key will be saved to disk and passed to ssh with IdentitiesOnly, to prevent \"Too many authentication failures\"."
+    echo "Usage: $0 [-H <search_string>] <ssh_args>"
+    /usr/bin/ssh
+    exit 1
+}
+
+# If no arguments are passed, show usage
+if [[ $# -eq 0 ]]; then
+    usage
+fi
+
+# Initialize variables
+AGENT_SEARCH=""
+SSH_ARGS=()
+KEY_FOLDER="$HOME/.ssh/pubkeys"
+
+if [[ ! -d "$KEY_FOLDER" ]]; then
+    mkdir -p "$KEY_FOLDER"
+    chmod 700 "$KEY_FOLDER"
+fi
+
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -H)
+            AGENT_SEARCH="$2"
+            echo "Searching for key with string: $AGENT_SEARCH"
+            shift 2
+            ;;
+        *)
+            SSH_ARGS+=("$1")
+            shift
+            ;;
+    esac
+done
+
+# If -H is provided, check ssh-agent for keys
+if [[ -n "$AGENT_SEARCH" ]]; then
+    # Check if ssh-add is there, just in case...
+    if ! command -v ssh-add &> /dev/null; then
+        echo "Error: ssh-add command not found."
+        exit 1
+    fi
+
+    # Query the ssh-agent to get the available keys along with comments
+    SSH_KEYS=$(ssh-add -L)
+
+    # Check if the ssh-agent has keys available
+    if [[ -z "$SSH_KEYS" ]]; then
+        echo "No keys available in ssh-agent."
+        exit 1
+    fi
+
+    # Extract the matching key based on the search string
+    MATCHED_KEY=$(echo "$SSH_KEYS" | grep -F "$AGENT_SEARCH" | head -n 1)
+
+    if [[ -n "$MATCHED_KEY" ]]; then
+        # Extract the comment (usually the email or description)
+        COMMENT=$(echo "$MATCHED_KEY" | awk '{print $3}')
+        KEY_FILE="$KEY_FOLDER/${COMMENT:-"invalid_comment"}.pub"
+
+        # Save the matched key to the pubkeys directory
+        echo "$MATCHED_KEY" > "$KEY_FILE"
+        echo "Saved matching key to $KEY_FILE"
+    else
+        echo "No matching key found for '$AGENT_SEARCH'."
+        exit 1
+    fi
+
+    # Add the -i and IdentitiesOnly flags to SSH
+    SSH_ARGS=(-i "$KEY_FILE" -o IdentitiesOnly=yes "${SSH_ARGS[@]}")
+fi
+
+# Use exec to run the ssh command and replace the current shell process
+exec /usr/bin/ssh "${SSH_ARGS[@]}"
