@@ -1,0 +1,39 @@
+// Always run when requested by the scheduler
+// Edit teh systemd apt-*.timer
+APT::Periodic::Update-Package-Lists "always";
+APT::Periodic::Unattended-Upgrade "always";
+
+Unattended-Upgrade::Origins-Pattern {
+        "o=${distro_id},a=${distro_codename}";
+        "o=${distro_id},a=${distro_codename}-security";
+        "o=${distro_id}ESMApps,a=${distro_codename}-apps-security";
+        "o=${distro_id}ESM,a=${distro_codename}-infra-security";
+        "o=${distro_id},a=${distro_codename}-updates";
+        "o=${distro_id},a=${distro_codename}-backports";
+        "o=PowerDNS";
+        "o=cloudsmith/caddy/stable";
+};
+
+// Make dpkg use the default option for new config. If there is no default, keep the old one.
+Dpkg::Options {
+        "--force-confdef";
+        "--force-confold";
+};
+
+// Remove unused automatically installed kernel-related packages
+// (kernel images, kernel headers and kernel version locked tools).
+Unattended-Upgrade::Remove-Unused-Kernel-Packages "true";
+
+// Do automatic removal of unused packages after the upgrade
+// (equivalent to apt-get autoremove)
+Unattended-Upgrade::Remove-Unused-Dependencies "false";
+
+// Automatically reboot *WITHOUT CONFIRMATION* if
+//  the file /var/run/reboot-required is found after the upgrade
+Unattended-Upgrade::Automatic-Reboot "true";
+
+// If automatic reboot is enabled and needed, reboot at the specific
+// time instead of immediately
+//  Default: "now"
+Unattended-Upgrade::Automatic-Reboot-Time "05:00";
+

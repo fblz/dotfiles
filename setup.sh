@@ -40,13 +40,20 @@ for profile in "$@"; do
         ln -fs $sources/.config/xfce4/terminal/terminalrc ~/.config/xfce4/terminal/terminalrc
         ;;
     ssh)
-				echo "Warning: This overwrites the files in /etc/ssh." 
-				echo "sudo is used." 
+        echo "Warning: This overwrites the default sshd_config" 
+        echo "sudo is used." 
         sudo mkdir -p /etc/ssh/sshd_config.d/
         sudo cp -f $sources/etc/ssh/sshd_config /etc/ssh/sshd_config
         sudo cp -f $sources/etc/ssh/sshd_config.d/10-security.conf /etc/ssh/sshd_config.d/10-security.conf
         sudo cp -f $sources/etc/ssh/sshd_config.d/30-autotmux.conf /etc/ssh/sshd_config.d/30-autotmux.conf
         sudo cp -f $sources/etc/ssh/sshd_config.d/90-defaults.conf /etc/ssh/sshd_config.d/90-defaults.conf
+        ;;
+    apt)
+        echo "sudo is used." 
+        sudo mkdir -p /etc/apt/apt.conf.d/
+        sudo cp -f $sources/etc/apt/apt.conf.d/60custom-unattended /etc/apt/apt.conf.d/60custom-unattended
+        echo "Check the timers to align the schedule"
+	systemctl cat apt-daily{,-upgrade}.timer
         ;;
     *)
         echo "unknown profile"
