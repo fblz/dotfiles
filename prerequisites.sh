@@ -28,7 +28,7 @@ for profile in "$@"; do
         case "$ID" in
         ubuntu)
             apt-get update
-            apt-get install -y tmux git vim fzf bash-completion tree
+            apt-get install -y tmux git vim fzf bash-completion tree chrony
         ;;
         fedora)
             echo "outdated"
