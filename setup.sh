@@ -91,7 +91,14 @@ for profile in "$@"; do
         sudo cp -f $sources/etc/qemu/qemu-ga.conf /etc/qemu/qemu-ga.conf
         sudo systemctl reload-or-try-restart qemu-guest-agent.service
         ;;
-    *)
+    ntp)
+        echo "$profile is a copy profile (sudo)"
+        sudo mkdir -p /etc/chrony/sources.d/
+        sudo cp -f $sources/etc/chrony/sources.d/time.ptb.de.sources /etc/chrony/sources.d/time.ptb.de.sources
+        sudo chronyc reload sources
+        sudo timedatectl set-timezone 'Europe/Berlin'
+        ;;
+   *)
         echo "unknown profile $profile"
         continue
         ;;

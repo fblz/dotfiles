@@ -1,0 +1,6 @@
+server ptbtime1.ptb.de iburst nts prefer
+server ptbtime2.ptb.de iburst nts prefer
+server ptbtime3.ptb.de iburst nts prefer
+
+# Geo-redundant server, only used if the others fail
+server ptbtime4.ptb.de iburst nts
