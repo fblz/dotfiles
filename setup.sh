@@ -6,6 +6,7 @@ if [ -z "$1" ] || [ $1 == "-h" ] || [ $1 == "--help" ]; then
     echo "console"
     echo "desktop"
     echo "ssh"
+    echo "apt"
     exit
 fi
 
