@@ -69,6 +69,7 @@ for profile in "$@"; do
         sudo cp -f $sources/etc/ssh/sshd_config.d/01-security.conf /etc/ssh/sshd_config.d/01-security.conf
         sudo cp -f $sources/etc/ssh/sshd_config.d/30-autotmux.conf /etc/ssh/sshd_config.d/30-autotmux.conf
         sudo cp -f $sources/etc/ssh/sshd_config.d/90-defaults.conf /etc/ssh/sshd_config.d/90-defaults.conf
+        sudo systemctl reload ssh
         ;;
     apt)
         echo "$profile is a copy profile (sudo)"
