@@ -73,11 +73,14 @@ for profile in "$@"; do
     apt)
         echo "$profile is a copy profile (sudo)"
         sudo mkdir -p /etc/apt/apt.conf.d/
+        sudo mkdir -p /etc/systemd/system/apt-daily.timer.d
+        sudo mkdir -p /etc/systemd/system/apt-daily-upgrade.timer.d
         sudo cp -f $sources/etc/apt/apt.conf.d/60custom-unattended /etc/apt/apt.conf.d/60custom-unattended
-        sudo cp -f $sources/etc/systemd/system/apt-daily-upgrade.timer.d/override.conf /etc/systemd/system/apt-daily-upgrade.timer.d/override.conf
         sudo cp -f $sources/etc/systemd/system/apt-daily.timer.d/override.conf /etc/systemd/system/apt-daily.timer.d/override.conf
+        sudo cp -f $sources/etc/systemd/system/apt-daily-upgrade.timer.d/override.conf /etc/systemd/system/apt-daily-upgrade.timer.d/override.conf
         sudo systemctl daemon-reload
-        sudo systemctl restart apt-daily{,-upgrade}.timer
+        sudo systemctl restart apt-daily.timer
+        sudo systemctl restart apt-daily-upgrade.timer
         ;;
     *)
         echo "unknown profile $profile"
