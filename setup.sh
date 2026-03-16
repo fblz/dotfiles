@@ -7,6 +7,7 @@ if [ -z "$1" ] || [ $1 == "-h" ] || [ $1 == "--help" ]; then
     echo "desktop"
     echo "ssh"
     echo "apt"
+    echo "qemu"
     exit
 fi
 
@@ -83,6 +84,12 @@ for profile in "$@"; do
         sudo systemctl daemon-reload
         sudo systemctl restart apt-daily.timer
         sudo systemctl restart apt-daily-upgrade.timer
+        ;;
+    qemu)
+        echo "$profile is a copy profile (sudo)"
+        sudo mkdir -p /etc/qemu/
+        sudo cp -f $sources/etc/qemu/qemu-ga.conf /etc/qemu/qemu-ga.conf
+        sudo systemctl reload-or-try-restart qemu-guest-agent.service
         ;;
     *)
         echo "unknown profile $profile"
