@@ -31,9 +31,11 @@ for profile in "$@"; do
             apt-get install -y tmux git vim fzf bash-completion tree
         ;;
         fedora)
+            echo "outdated"
             dnf install --assumeyes tmux git vim fzf bash-completion tree
         ;;
         opensuse-leap)
+            echo "outdated"
             zypper install --no-confirm tmux git vim fzf bash-completion tree
         ;;
         *)
@@ -44,6 +46,7 @@ for profile in "$@"; do
     desktop)
         case "$ID" in
         fedora)
+            echo "outdated"
             dnf groupinstall --assumeyes i3
             rpm --import https://packages.microsoft.com/keys/microsoft.asc
             echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo
