@@ -15,6 +15,7 @@ for profile in "$@"; do
     echo "Installing profile '$profile'"
     case "$profile" in
     console)
+        echo "$profile is a symlink profile"
         ln -fs $sources/.bashrc ~/.bashrc
         ln -fs $sources/.tmux.conf ~/.tmux.conf
         ln -fs $sources/.vimrc ~/.vimrc
@@ -28,6 +29,7 @@ for profile in "$@"; do
         ln -fs $sources/.bashrc.d/98-fzf.sh ~/.bashrc.d/98-fzf.sh
         ;;
     desktop)
+        echo "$profile is a symlink profile"
         ln -fs $sources/.lock ~/.lock
         
         mkdir -p ~/.config/i3/
@@ -40,8 +42,8 @@ for profile in "$@"; do
         ln -fs $sources/.config/xfce4/terminal/terminalrc ~/.config/xfce4/terminal/terminalrc
         ;;
     ssh)
+        echo "$profile is a copy profile (sudo)"
         echo "Warning: This overwrites the default sshd_config" 
-        echo "sudo is used." 
         sudo mkdir -p /etc/ssh/sshd_config.d/
         sudo cp -f $sources/etc/ssh/sshd_config /etc/ssh/sshd_config
         sudo cp -f $sources/etc/ssh/sshd_config.d/01-security.conf /etc/ssh/sshd_config.d/01-security.conf
@@ -49,14 +51,14 @@ for profile in "$@"; do
         sudo cp -f $sources/etc/ssh/sshd_config.d/90-defaults.conf /etc/ssh/sshd_config.d/90-defaults.conf
         ;;
     apt)
-        echo "sudo is used." 
+        echo "$profile is a copy profile (sudo)"
         sudo mkdir -p /etc/apt/apt.conf.d/
         sudo cp -f $sources/etc/apt/apt.conf.d/60custom-unattended /etc/apt/apt.conf.d/60custom-unattended
         echo "Check the timers to align the schedule"
 	systemctl cat apt-daily{,-upgrade}.timer
         ;;
     *)
-        echo "unknown profile"
+        echo "unknown profile $profile"
         continue
         ;;
     esac
