@@ -11,22 +11,6 @@ if [ -z "$1" ] || [ $1 == "-h" ] || [ $1 == "--help" ]; then
     exit
 fi
 
-# the vibe is sad
-confirm() {
-    local answer
-    while true; do
-        read -rp "$1 [y/n]: " answer
-        case "$answer" in
-            [Yy]|[Yy][Ee][Ss])
-                return 0
-                ;;
-            [Nn]|[Nn][Oo])
-                return 1
-                ;;
-        esac
-    done
-}
-
 sources=$(dirname $(readlink -f $0))
 
 for profile in "$@"; do
@@ -61,12 +45,12 @@ for profile in "$@"; do
         ;;
     ssh)
         echo "$profile is a copy profile (sudo)"
-        echo "There is existing non-local config:"
+        echo "Deleting non-local config:"
         sudo mkdir -p /etc/ssh/sshd_config.d/
         sudo find /etc/ssh/sshd_config.d/ -maxdepth 1 -type f ! -name "*.local.conf" -print
         echo ""
         echo "All files named *.local.conf will be kept."
-        confirm "Delete exisiting config?" && sudo find /etc/ssh/sshd_config.d/ -maxdepth 1 -type f ! -name "*.local.conf" -exec rm {} +
+        sudo find /etc/ssh/sshd_config.d/ -maxdepth 1 -type f ! -name "*.local.conf" -exec rm {} +
         sudo cp -f $sources/etc/ssh/sshd_config /etc/ssh/sshd_config
         sudo cp -f $sources/etc/ssh/sshd_config.d/01-security.conf /etc/ssh/sshd_config.d/01-security.conf
         sudo cp -f $sources/etc/ssh/sshd_config.d/30-autotmux.conf /etc/ssh/sshd_config.d/30-autotmux.conf
