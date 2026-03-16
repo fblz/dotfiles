@@ -44,7 +44,7 @@ for profile in "$@"; do
         echo "sudo is used." 
         sudo mkdir -p /etc/ssh/sshd_config.d/
         sudo cp -f $sources/etc/ssh/sshd_config /etc/ssh/sshd_config
-        sudo cp -f $sources/etc/ssh/sshd_config.d/10-security.conf /etc/ssh/sshd_config.d/10-security.conf
+        sudo cp -f $sources/etc/ssh/sshd_config.d/01-security.conf /etc/ssh/sshd_config.d/01-security.conf
         sudo cp -f $sources/etc/ssh/sshd_config.d/30-autotmux.conf /etc/ssh/sshd_config.d/30-autotmux.conf
         sudo cp -f $sources/etc/ssh/sshd_config.d/90-defaults.conf /etc/ssh/sshd_config.d/90-defaults.conf
         ;;
